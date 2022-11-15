@@ -28,11 +28,11 @@ router.use(
 );
 
 router.get('/login', requiresAuth(), (request, response) => {
-  response.redirect(BACKENDHOST+"/welcome.html");
+  response.redirect("https://capstonebe.onrender.com");
 });
 
 router.get('/custom-logout', (request, response) => {
-  response.redirect(BACKENDHOST);
+  response.redirect("https://capstonebe.onrender.com");
 });
 
 // req.isAuthenticated is provided from the auth router
