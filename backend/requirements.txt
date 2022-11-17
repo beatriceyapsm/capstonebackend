@@ -1,0 +1,10 @@
+﻿matplotlib
+numpy
+openpyxl
+pandas
+plotly
+plotly-express
+prophet
+scikit-learn
+scipy
+seaborn
