@@ -2,6 +2,7 @@ import streamlit as st  # pip install streamlit
 import pandas as pd  # pip install pandas
 import plotly.express as px  # pip install plotly-express
 import base64  # Standard Python Module
+from streamlit_timeline import timeline # pip install streamlit-timeline, timeline module
 from io import StringIO, BytesIO  # Standard Python Module
 
 # import pmdarima as pm #pip install pmdarima
@@ -94,3 +95,15 @@ if uploaded_file:
     # st.subheader('Downloads:')
     # generate_excel_download_link(df_grouped)
     # generate_html_download_link(fig)
+
+# -- TIMELINE SECTION
+# Streamlit Timeline Component Example
+# use full page width
+#st.set_page_config(page_title="Timeline Example", layout="wide")
+
+# load data
+with open('example.json', "r") as f:
+    data = f.read()
+
+# render timeline
+timeline(data, height=800)
