@@ -7,15 +7,15 @@
           "credit": ""
         },
         "text": {
-          "headline": "Welcome to<br>Streamlit Timeline",
-          "text": "<p>A Streamlit Timeline component by integrating TimelineJS from Knightlab</p>"
+          "headline": "Welcome to<br>MIRAI",
+          "text": "<p>A MIRAI Timeline of EV Relay News</p>"
         }
     },
     "events": [
       {
         "media": {
           "url": "https://vimeo.com/143407878",
-          "caption": "How to Use TimelineJS (<a target=\"_blank\" href='https://timeline.knightlab.com/'>credits</a>)"
+          "caption": "Panasonic joints venture with Toyota to manufacture EV Battery(<a target=\"_blank\" href='https://www.forbes.com/sites/greggardner/2020/02/03/toyota-and-panasonic-launch-joint-ev-battery-venture/?sh=71dae2804c3a'>credits</a>)"
         },
         "start_date": {
           "year": "2016",
