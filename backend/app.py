@@ -1,3 +1,5 @@
+import pandas as pd
+from st_aggrid import AgGrid
 import streamlit as st  # pip install streamlit
 import pandas as pd  # pip install pandas
 import plotly.express as px  # pip install plotly-express
@@ -203,3 +205,8 @@ data = json.loads(response_API.text)
 
 # render timeline
 timeline(data, height=800)
+
+
+df = pd.read_csv(
+    'https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv')
+AgGrid(df)
