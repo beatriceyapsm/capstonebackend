@@ -14,16 +14,16 @@
     "events": [
       {
         "media": {
-          "url": "https://www.japantimes.co.jp/news/2021/07/16/business/corporate-business/toyota-panasonic-batteries/",
+          "url": "https://cdn-japantimes.com/wp-content/uploads/2021/07/np_file_99394.jpeg",
           "caption": "Panasonic joints venture with Toyota to manufacture EV Battery(<a target=\"_blank\" href='https://www.forbes.com/sites/greggardner/2020/02/03/toyota-and-panasonic-launch-joint-ev-battery-venture/?sh=71dae2804c3a'>credits</a>)"
         },
         "start_date": {
-          "year": "2016",
-          "month":"1"
+          "year": "2020",
+          "month":"2"
         },
         "text": {
-          "headline": "TimelineJS<br>Easy-to-make, beautiful timelines.",
-          "text": "<p>TimelineJS is a populair tool from Knightlab. It has been used by more than 250,000 people to tell stories seen hundreds of millions of times, and is available in more than sixty languages. </p>"
+          "headline": "Toyota-Panasonic battery venture slashes costs to take on China",
+          "text": "<p>The flat highland area near the Chilean border is where a vital battery component — lithium — is mined. Koda, the president of Prime Planet Energy & Solutions, a Toyota Motor Corp. and Panasonic Corp. battery joint-venture, was there on a mission: revamp the site’s operations to lower his cost of materials.</p>"
         }
       },
       {
