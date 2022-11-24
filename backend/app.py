@@ -4,6 +4,8 @@ import plotly.express as px  # pip install plotly-express
 import base64  # Standard Python Module
 from streamlit_timeline import timeline # pip install streamlit-timeline, timeline module
 from io import StringIO, BytesIO  # Standard Python Module
+import requests
+import json
 
 # import pmdarima as pm #pip install pmdarima
 # from pmdarima.model_selection import train_test_split #for forecasting
@@ -102,8 +104,12 @@ if uploaded_file:
 #st.set_page_config(page_title="Timeline Example", layout="wide")
 
 # load data
-with open('/backend/example.json', "r") as f:
-    data = f.read()
+# with open('example.json', "r") as f:
+#     data = f.read()
+
+    
+response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/backend/example.json?token=GHSAT0AAAAAABXXAP6H2HBMIFJGZGDH6ILUY37F5MQ')
+data = json.loads(response_API.text)
 
 # render timeline
 timeline(data, height=800)
