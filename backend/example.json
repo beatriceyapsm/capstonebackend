@@ -11,36 +11,6 @@
     }
   },
   "events": [
-    //Removed as it is quite old news {
-    //   "media": {
-    //     "url": "https://cdn-japantimes.com/wp-content/uploads/2021/07/np_file_99394.jpeg",
-    //     "caption": "Panasonic joints venture with Toyota to manufacture EV Battery(<a target=\"_blank\" href='https://www.forbes.com/sites/greggardner/2020/02/03/toyota-and-panasonic-launch-joint-ev-battery-venture/?sh=71dae2804c3a'>credits</a>)"
-    //   },
-    //   "start_date": {
-    //     "year": "2021",
-    //     "month": "07",
-    //     "day": "14"
-    //   },
-    //   "text": {
-    //     "headline": "Toyota-Panasonic battery venture slashes costs to take on China",
-    //     "text": "<p>The flat highland area near the Chilean border is where a vital battery component — lithium — is mined. Koda, the president of Prime Planet Energy & Solutions, a Toyota Motor Corp. and Panasonic Corp. battery joint-venture, was there on a mission: revamp the site’s operations to lower his cost of materials.</p>"
-    //   }
-    // },
-    {
-      "media": {
-        "url": "https://djx5h8pabpett.cloudfront.net/wp-content/uploads/2022/01/17093252/Home_charging_Electric-1024x576.jpg",
-        "caption": "Annual EV sales have surges tenfold in the wake of the Covid pandemic.(<a target=\"_blank\" href='https://www.motortrader.com/motor-trader-news/automotive-news/annual-ev-sales-tenfold-post-pandemic-says-vwfs-26-09-2022'>credits</a>)"
-      },
-      "start_date": {
-        "year": "2022",
-        "month": "09",
-        "day": "26"
-      },
-      "text": {
-        "headline": "Annual EV sales up “tenfold” post-pandemic, says VWFS",
-        "text": "Research from Volkswagen Financial Services UK (VWFS) shows that annual finance cases for electric vehicles (BEV/PHEV/HEV) increased 1,062% from July 2019 to July 2022. The percentage of electric vehicles financed by the car...(<a target=\"_blank\" href='https://www.motortrader.com/motor-trader-news/automotive-news/annual-ev-sales-tenfold-post-pandemic-says-vwfs-26-09-2022'>Read more</a>"
-      }
-    },
     {
       "media": {
         "url": "https://cdn1.techhq.com/wp-content/uploads/2022/11/shutterstock_2225737985_1440px.jpg",
