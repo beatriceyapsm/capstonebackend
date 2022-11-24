@@ -13,6 +13,21 @@
   "events": [
     {
       "media": {
+        "url": "https://djx5h8pabpett.cloudfront.net/wp-content/uploads/2022/01/17093252/Home_charging_Electric-1024x576.jpg",
+        "caption": "Annual EV sales have surges tenfold in the wake of the Covid pandemic.(<a target=\"_blank\" href='https://www.motortrader.com/motor-trader-news/automotive-news/annual-ev-sales-tenfold-post-pandemic-says-vwfs-26-09-2022'>credits</a>)"
+      },
+      "start_date": {
+        "year": "2022",
+        "month": "09",
+        "day": "26"
+      },
+      "text": {
+        "headline": "Annual EV sales up “tenfold” post-pandemic, says VWFS",
+        "text": "Research from Volkswagen Financial Services UK (VWFS) shows that annual finance cases for electric vehicles (BEV/PHEV/HEV) increased 1,062% from July 2019 to July 2022. The percentage of electric vehicles financed by the car...(<a target=\"_blank\" href='https://www.motortrader.com/motor-trader-news/automotive-news/annual-ev-sales-tenfold-post-pandemic-says-vwfs-26-09-2022'>Read more</a>"
+      }
+    },
+    {
+      "media": {
         "url": "https://cdn1.techhq.com/wp-content/uploads/2022/11/shutterstock_2225737985_1440px.jpg",
         "caption": "TechHQ (<a target=\"_blank\" href='https://techhq.com/2022/11/ev-battery-recycling-circular-economy-charges-up/'>credits</a>)"
       },
