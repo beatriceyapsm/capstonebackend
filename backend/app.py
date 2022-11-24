@@ -102,7 +102,7 @@ if uploaded_file:
 #st.set_page_config(page_title="Timeline Example", layout="wide")
 
 # load data
-with open('example.json', "r") as f:
+with open('/backend/example.json', "r") as f:
     data = f.read()
 
 # render timeline
