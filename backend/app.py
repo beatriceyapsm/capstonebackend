@@ -108,7 +108,7 @@ if uploaded_file:
 #     data = f.read()
 
     
-response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/backend/example.json?token=GHSAT0AAAAAABXXAP6H2HBMIFJGZGDH6ILUY37F5MQ')
+response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/deploytest/main/example.json')
 data = json.loads(response_API.text)
 
 # render timeline
