@@ -209,4 +209,4 @@ timeline(data, height=800)
 
 df = pd.read_csv(
     'https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv')
-AgGrid(df)
+AgGrid(df, editable=True)
