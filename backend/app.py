@@ -6,6 +6,7 @@ from streamlit_timeline import timeline # pip install streamlit-timeline, timeli
 from io import StringIO, BytesIO  # Standard Python Module
 import requests
 import json
+import altair as alt
 
 # import pmdarima as pm #pip install pmdarima
 # from pmdarima.model_selection import train_test_split #for forecasting
@@ -44,6 +45,7 @@ uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
 if uploaded_file:
     st.markdown('---')
     df = pd.read_excel(uploaded_file, engine='openpyxl')
+    df['ds'] = pd.to_datetime(df['ds']).dt.date
     # df = df.sort_values(by='Order Date', ascending=True)
     # st.dataframe(df)
     # groupby_column = st.selectbox(
@@ -75,13 +77,123 @@ if uploaded_file:
     future = future.tail(6)
     # st.dataframe(future)
     forecast = m.predict(future)
-    # forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()
+    forecast = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+    forecast['ds'] = pd.to_datetime(forecast['ds']).dt.date
     st.dataframe(forecast)
-    fig1 = m.plot(forecast, xlabel='Date', ylabel='Sales Quantity')
+    # fig1 = m.plot(forecast, xlabel='Date', ylabel='Sales Quantity')
     # fig2 = m.plot_components(forecast)
+    st.dataframe(df) 
 
-    st.write(fig1)
+    # st.write(fig1)
+    
+    def get_chart(data):
+        hover = alt.selection_single(
+            fields=["ds"],
+            nearest=True,
+            on="mouseover",
+            empty="none",
+        )
 
+        lines = (
+            alt.Chart(data, title="Forecast Demand")
+            .mark_line()
+            .encode(
+                x="ds",
+                y="y"
+            )
+        )
+
+        # Draw points on the line, and highlight based on selection
+        points = lines.transform_filter(hover).mark_circle(size=65)
+
+        # Draw a rule at the location of the selection
+        tooltips = (
+            alt.Chart(data)
+            .mark_rule()
+            .encode(
+                x="ds",
+                y="y",
+                opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+                tooltip=[
+                    alt.Tooltip("ds", title="Date"),
+                    alt.Tooltip("y", title="Price (USD)"),
+                ],
+            )
+            .add_selection(hover)
+        )
+        return (lines + points + tooltips).interactive()
+        
+    def get_chart2(data):
+        hover = alt.selection_single(
+            fields=["ds"],
+            nearest=True,
+            on="mouseover",
+            empty="none",
+        )
+
+        lines = (
+            alt.Chart(data, title="Forecast Demand")
+            .mark_line()
+            .encode(
+                x="ds",
+                y="yhat",
+                color=alt.value("#FFAA00")
+            )
+        )
+
+        # Draw points on the line, and highlight based on selection
+        points = lines.transform_filter(hover).mark_circle(size=65)
+
+        # Draw a rule at the location of the selection
+        tooltips = (
+            alt.Chart(data)
+            .mark_rule()
+            .encode(
+                x="ds",
+                y="yhat",
+                opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+                tooltip=[
+                    alt.Tooltip("ds", title="Date"),
+                    alt.Tooltip("yhat", title="Price (USD)")
+                ],
+            )
+            .add_selection(hover)
+        )
+        return (lines + points + tooltips).interactive()
+    
+
+
+    chart = get_chart(df)
+    chart2 = get_chart2(forecast)
+
+    ANNOTATIONS = [
+        ("Sep 26, 2022", "ANNUAL EV SALES UP “TENFOLD” POST-PANDEMIC"),
+        ("Nov 14, 2022", "EV BATTERY RECYCLING – CIRCULAR ECONOMY CHARGES UP"),
+        ("Nov 16, 2022", "INDONESIA'S INDIKA, TAIWAN'S FOXCONN MULL EV PARTNERSHIP WITH THAI FIRM"),
+        ("Dec 16, 2022", "BLAHBLAH"),  
+        ("Dec 30, 2022", "BLAHBLAH"),
+    ]
+    annotations_df = pd.DataFrame(ANNOTATIONS, columns=["date", "event"])
+    annotations_df.date = pd.to_datetime(annotations_df.date)
+    annotations_df["y"] = 35000
+
+    annotation_layer = (
+    alt.Chart(annotations_df)
+    .mark_text(size=20, text="⬇", dx=-8, dy=-10, align="left")
+    .encode(
+        x="date:T",
+        y=alt.Y("y:Q"),
+        tooltip=["date","event"],
+    )
+    .interactive()
+    )
+    
+    st.altair_chart(
+    (chart+ chart2+ annotation_layer).interactive(),
+    use_container_width=True
+    )
+    
+    
     # -- PLOT DATAFRAME
     # fig = px.line(
     #     df_grouped,
@@ -108,7 +220,7 @@ if uploaded_file:
 #     data = f.read()
 
     
-response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/backend/example.json?token=GHSAT0AAAAAABXXAP6H2HBMIFJGZGDH6ILUY37F5MQ')
+response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/deploytest/main/example.json')
 data = json.loads(response_API.text)
 
 # render timeline
