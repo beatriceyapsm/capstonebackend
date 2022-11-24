@@ -10,3 +10,6 @@ scipy
 seaborn
 streamlit_timeline
 timeline
+json
+requests
+altair
