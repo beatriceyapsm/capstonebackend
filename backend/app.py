@@ -34,9 +34,9 @@ from prophet import Prophet
 #     return st.markdown(href, unsafe_allow_html=True)
 
 
-st.set_page_config(page_title='Excel Plotter')
-st.title('Excel Plotter 📈')
-st.subheader('Feed me with your Excel file')
+st.set_page_config(page_title='MIRAI 未来')
+st.title('MIRAI 未来')
+st.subheader('Feed me with your Sales Data and I will tell you the future')
 
 uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
 if uploaded_file:
