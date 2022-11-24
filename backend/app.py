@@ -46,31 +46,8 @@ if uploaded_file:
     st.markdown('---')
     df = pd.read_excel(uploaded_file, engine='openpyxl')
     df['ds'] = pd.to_datetime(df['ds']).dt.date
-    # df = df.sort_values(by='Order Date', ascending=True)
-    # st.dataframe(df)
-    # groupby_column = st.selectbox(
-    #     'What would you like to analyse?',
-    #     ('Order Date', 'Month', 'Year'),
-    # )
- 
-    # -- GROUP DATAFRAME
-    # output_columns = ['Quantity']
-    # df_grouped = df.groupby(by=[groupby_column], as_index=False).agg({'Quantity':'sum'})
 
-    # -- FORECASTING
-    # train, test = train_test_split(df, train_size=round(len(df)*0.8,None))
-    # sns.set()
-    # # train = btc[btc.index < pd.to_datetime("2020-11-01", format='%Y-%m-%d')]
-    # # test = btc[btc.index > pd.to_datetime("2020-11-01", format='%Y-%m-%d')]
-
-    # plt.plot(train, color = "black")
-    # plt.plot(test, color = "red")
-    # plt.ylabel('Sales')
-    # plt.xlabel('Date')
-    # plt.xticks(df['Order Date'])
-    # plt.title("Train/Test split for Sales Data")
-    # plt.show()
-
+    #forecast using Prophet
     m = Prophet()
     m.fit(df)
     future = m.make_future_dataframe(periods=6, freq='M')
@@ -82,10 +59,12 @@ if uploaded_file:
     st.dataframe(forecast)
     # fig1 = m.plot(forecast, xlabel='Date', ylabel='Sales Quantity')
     # fig2 = m.plot_components(forecast)
-    st.dataframe(df) 
+    forecast1=forecast.drop(['yhat_lower'], axis=1)
+    forecast1['yhat_lower']=forecast['yhat_upper']
+    forecast = forecast.append(forecast1)
 
-    # st.write(fig1)
     
+    #Plot Charts
     def get_chart(data):
         hover = alt.selection_single(
             fields=["ds"],
@@ -123,7 +102,7 @@ if uploaded_file:
         )
         return (lines + points + tooltips).interactive()
         
-    def get_chart2(data):
+    def fchart(data):
         hover = alt.selection_single(
             fields=["ds"],
             nearest=True,
@@ -161,10 +140,24 @@ if uploaded_file:
         )
         return (lines + points + tooltips).interactive()
     
+    def fspots(data):
 
+        spots = (
+            alt.Chart(data, title="Forecast Demand")
+            .mark_circle()
+            .encode(
+                x="ds",
+                y="yhat_lower",
+                color=alt.value("#FFAA00")
+            )
+        )
+
+
+        return (spots).interactive()
 
     chart = get_chart(df)
-    chart2 = get_chart2(forecast)
+    chart2 = fchart(forecast)
+    chart3 = fspots(forecast)
 
     ANNOTATIONS = [
         ("Sep 26, 2022", "ANNUAL EV SALES UP “TENFOLD” POST-PANDEMIC"),
@@ -189,26 +182,11 @@ if uploaded_file:
     )
     
     st.altair_chart(
-    (chart+ chart2+ annotation_layer).interactive(),
+    (chart+ chart2+ chart3+ annotation_layer).interactive(),
     use_container_width=True
     )
     
     
-    # -- PLOT DATAFRAME
-    # fig = px.line(
-    #     df_grouped,
-    #     x=groupby_column,
-    #     y='Quantity',
-    #     # color='Category',
-    #     # template='plotly_white',
-    #     title=f'<b>Sales by {groupby_column}</b>'
-    # )
-    # st.plotly_chart(fig)
-
-    # -- DOWNLOAD SECTION
-    # st.subheader('Downloads:')
-    # generate_excel_download_link(df_grouped)
-    # generate_html_download_link(fig)
 
 # -- TIMELINE SECTION
 # Streamlit Timeline Component Example
