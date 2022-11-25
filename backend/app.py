@@ -213,7 +213,7 @@ timeline(data, height=800)
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
 df = pd.read_csv(
-    'https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv')
+    'https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/NewsArticlesLargeCleaned.csv?token=GHSAT0AAAAAAB23BOB4PULKQP3JWSHZDUYYY4AE6OQ')
 st.header("This is header")
 
 gd = GridOptionsBuilder.from_dataframe(df)
