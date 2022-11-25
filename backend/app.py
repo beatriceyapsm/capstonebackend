@@ -1,5 +1,5 @@
 import pandas as pd
-from st_aggrid import AgGrid
+# from st_aggrid import AgGrid
 import streamlit as st  # pip install streamlit
 import pandas as pd  # pip install pandas
 import plotly.express as px  # pip install plotly-express
@@ -218,21 +218,21 @@ if uploaded_file:
 
 # render timeline
 timeline(data, height=800)
-st.dataframe(news)
+st.dataframe(news[['date','event']])
 
 
 
 
-#--Table Section
-from st_aggrid.grid_options_builder import GridOptionsBuilder
+# #--Table Section
+# from st_aggrid.grid_options_builder import GridOptionsBuilder
 
-df = pd.read_csv(
-    'https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/NewsArticlesLargeCleaned.csv?token=GHSAT0AAAAAAB23BOB4PULKQP3JWSHZDUYYY4AE6OQ')
-st.header("This is header")
+# df = pd.read_csv(
+#     'https://raw.githubusercontent.com/beatriceyapsm/capstonebackend/main/NewsArticlesLargeCleaned.csv?token=GHSAT0AAAAAAB23BOB4PULKQP3JWSHZDUYYY4AE6OQ')
+# st.header("This is header")
 
-gd = GridOptionsBuilder.from_dataframe(df)
-gd.configure_pagination(enabled=True)
-gd.configure_default_column(editable=True,groupable=True)
+# gd = GridOptionsBuilder.from_dataframe(df)
+# gd.configure_pagination(enabled=True)
+# gd.configure_default_column(editable=True,groupable=True)
 
 
-AgGrid(df, editable=True)
+# AgGrid(df, editable=True)
