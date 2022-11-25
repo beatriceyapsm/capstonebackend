@@ -12,3 +12,4 @@ streamlit_timeline
 timeline
 requests
 altair
+streamlit-aggrid
