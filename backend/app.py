@@ -41,6 +41,18 @@ st.set_page_config(page_title='MIRAI 未来')
 st.title('MIRAI 未来')
 st.subheader('Feed me with your Sales Data and I will tell you the future')
 
+# Load news file:
+response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/deploytest/main/example.json')
+data = json.loads(response_API.text)
+news = pd.json_normalize(data['events'])
+news = news.drop(['media.url','media.caption','text.text'],axis=1)
+news['date']=news['start_date.year']+"-"+news['start_date.month']+"-"+news['start_date.day']
+news.rename(columns={'text.headline':'event'}, inplace=True)
+news = news.drop(['start_date.year','start_date.month','start_date.day'],axis=1)
+col = ['date','event']
+news = news[col]
+
+#Get files from user
 uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
 if uploaded_file:
     st.markdown('---')
@@ -61,7 +73,7 @@ if uploaded_file:
     # fig2 = m.plot_components(forecast)
     forecast1=forecast.drop(['yhat_lower'], axis=1)
     forecast1['yhat_lower']=forecast['yhat_upper']
-    forecast = forecast.append(forecast1)
+    forecast2 = forecast.append(forecast1)
 
     
     #Plot Charts
@@ -126,7 +138,7 @@ if uploaded_file:
         # Draw a rule at the location of the selection
         tooltips = (
             alt.Chart(data)
-            .mark_rule()
+            .mark_circle()
             .encode(
                 x="ds",
                 y="yhat",
@@ -157,22 +169,24 @@ if uploaded_file:
 
     chart = get_chart(df)
     chart2 = fchart(forecast)
-    chart3 = fspots(forecast)
+    chart3 = fspots(forecast2)
 
-    ANNOTATIONS = [
-        ("Sep 26, 2022", "ANNUAL EV SALES UP “TENFOLD” POST-PANDEMIC"),
-        ("Nov 14, 2022", "EV BATTERY RECYCLING – CIRCULAR ECONOMY CHARGES UP"),
-        ("Nov 16, 2022", "INDONESIA'S INDIKA, TAIWAN'S FOXCONN MULL EV PARTNERSHIP WITH THAI FIRM"),
-        ("Dec 16, 2022", "BLAHBLAH"),  
-        ("Dec 30, 2022", "BLAHBLAH"),
-    ]
-    annotations_df = pd.DataFrame(ANNOTATIONS, columns=["date", "event"])
+    # ANNOTATIONS = [
+    #     ("Sep 26, 2022", "ANNUAL EV SALES UP “TENFOLD” POST-PANDEMIC"),
+    #     ("Nov 14, 2022", "EV BATTERY RECYCLING – CIRCULAR ECONOMY CHARGES UP"),
+    #     ("Nov 16, 2022", "INDONESIA'S INDIKA, TAIWAN'S FOXCONN MULL EV PARTNERSHIP WITH THAI FIRM"),
+    #     ("Dec 16, 2022", "BLAHBLAH"),  
+    #     ("Dec 30, 2022", "BLAHBLAH"),
+    # ]
+    # annotations_df = pd.DataFrame(ANNOTATIONS, columns=["date", "event"])
+   
+    annotations_df = news
     annotations_df.date = pd.to_datetime(annotations_df.date)
-    annotations_df["y"] = 35000
+    annotations_df["y"] = forecast['yhat_upper'].max()
 
     annotation_layer = (
     alt.Chart(annotations_df)
-    .mark_text(size=20, text="⬇", dx=-8, dy=-10, align="left")
+    .mark_text(size=20, text="⬇", color='red', dx=-8, dy=-10, align="left")
     .encode(
         x="date:T",
         y=alt.Y("y:Q"),
@@ -198,8 +212,8 @@ if uploaded_file:
 #     data = f.read()
 
     
-response_API = requests.get('https://raw.githubusercontent.com/beatriceyapsm/deploytest/main/example.json')
-data = json.loads(response_API.text)
+
 
 # render timeline
 timeline(data, height=800)
+st.dataframe(news)
