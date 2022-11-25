@@ -217,21 +217,22 @@ if uploaded_file:
 
 # render timeline
 timeline(data, height=800)
-#st.dataframe(news[['date','event']])
 
 
-
-
-# #--Table Section
+# --Table Section
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid import AgGrid
+from st_aggrid import GridUpdateMode
+
+proj_nums = [0.9,0.5,0.3,0.8,0.9,0.9,0.2,0.5,0.9,0.7,0.3,0.4,0.7,0.9,0.2]
 
 if 'y' in news.columns:
-    news_impact = news.assign(Projected_Imapct=" ", Estimated_Impact=" ")
+    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
     news_drop = news_impact.drop(columns=['y'])
     AgGrid(news_drop, editable=True, fit_columns_on_grid_load=True)
 else:
-    news_impact = news.assign(Projected_Imapct=" ", Estimated_Impact=" ")
+    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
     AgGrid(news_impact, editable=True, fit_columns_on_grid_load=True)
 
-#AgGrid(news_drop, editable=True, fit_columns_on_grid_load=True)
+
+
