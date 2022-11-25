@@ -206,7 +206,19 @@ data = json.loads(response_API.text)
 # render timeline
 timeline(data, height=800)
 
-#table
+
+
+
+#--Table Section
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+
 df = pd.read_csv(
     'https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv')
+st.header("This is header")
+
+gd = GridOptionsBuilder.from_dataframe(df)
+gd.configure_pagination(enabled=True)
+gd.configure_default_column(editable=True,groupable=True)
+
+
 AgGrid(df, editable=True)
