@@ -38,7 +38,7 @@ from prophet import Prophet
 #     return st.markdown(href, unsafe_allow_html=True)
 
 
-st.set_page_config(page_title='MIRAI 未来')
+st.set_page_config(page_title='MIRAI 未来', layout="wide")
 st.title('MIRAI 未来')
 st.subheader('Feed me with your Sales Data and I will tell you the future')
 
@@ -211,8 +211,6 @@ if uploaded_file:
 # load data
 # with open('example.json', "r") as f:
 #     data = f.read()
-
-    
 
 
 # render timeline
