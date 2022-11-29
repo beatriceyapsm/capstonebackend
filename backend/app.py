@@ -38,7 +38,7 @@ from prophet import Prophet
 #     return st.markdown(href, unsafe_allow_html=True)
 
 
-st.set_page_config(page_title='MIRAI 未来')
+st.set_page_config(page_title='MIRAI 未来', layout="wide")
 st.title('MIRAI 未来')
 st.subheader('Feed me with your Sales Data and I will tell you the future')
 
@@ -212,8 +212,6 @@ if uploaded_file:
 # with open('example.json', "r") as f:
 #     data = f.read()
 
-    
-
 
 # render timeline
 timeline(data, height=800)
@@ -224,15 +222,16 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid import AgGrid
 from st_aggrid import GridUpdateMode
 
-proj_nums = [0.9,0.5,0.3,0.8,0.9,0.9,0.2,0.5,0.9,0.7,0.3,0.4,0.7,0.9,0.2]
+proj_nums = ["10%~30%","N/A","N/A","N/A","-1%~-5%","4%~5%","4%~5%","-1%~-5%","N/A","-2%~-3%","5%~10%","N/A","N/A","-5%~10%","1%~2%"]
 
 if 'y' in news.columns:
-    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
+    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ", Business_Strategy=" ")
     news_drop = news_impact.drop(columns=['y'])
     AgGrid(news_drop, editable=True, fit_columns_on_grid_load=True)
 else:
-    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
+    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ", Business_Strategy=" ")
     AgGrid(news_impact, editable=True, fit_columns_on_grid_load=True)
 
+st.button ("Update")
 
 
