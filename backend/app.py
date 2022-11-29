@@ -221,18 +221,60 @@ timeline(data, height=800)
 
 # --Table Section
 from st_aggrid.grid_options_builder import GridOptionsBuilder
-from st_aggrid import AgGrid
-from st_aggrid import GridUpdateMode
+from st_aggrid import AgGrid, GridUpdateMode,JsCode
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+from sqlalchemy import create_engine
+import pymysql
 
-proj_nums = [0.9,0.5,0.3,0.8,0.9,0.9,0.2,0.5,0.9,0.7,0.3,0.4,0.7,0.9,0.2]
-
+##adding columns&value into news DataFrame
 if 'y' in news.columns:
-    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
-    news_drop = news_impact.drop(columns=['y'])
-    AgGrid(news_drop, editable=True, fit_columns_on_grid_load=True)
-else:
-    news_impact = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ")
-    AgGrid(news_impact, editable=True, fit_columns_on_grid_load=True)
+    news = news.drop(columns=['y']) #hide 'y' column when panasonic file uploaded
+
+proj_nums = ["10%~30%", "N/A", "N/A", "N/A", "-1%~-5%", "4%~5%", "4%~5%", "-1%~-5%", "N/A", "-2%~-3%", "5%~10%", "N/A", "N/A", "-5%~10%", "1%~2%"] #mock-up value for prjected_impact
+json_news = news.assign(Projected_Impact=proj_nums, Estimated_Impact=" ", Business_Strategy=" ") #add columns & value into project_impact
+
+##database login detail, hide in streamlit server
+host = st.secrets.mirai.host
+port = st.secrets.mirai.port
+database = st.secrets.mirai.database
+user = st.secrets.mirai.user
+password = st.secrets.mirai.password
+
+##initiate database connection 
+db_conn=create_engine("mysql+pymysql://{0}:{1}@{2}:{3}/{4}".format(
+            user, password, host, port, database
+        ))
 
 
+##reading existing table from database
+db_news = pd.read_sql_table(table_name='impacttable',con=db_conn)
 
+##merge base on event columns from both database and json file to get the latest news in json file
+if json_news['event'].reset_index(drop=True, inplace=True) == db_news['event'].reset_index(drop=True, inplace=True):
+    updated_db_news = db_news
+else: 
+    updated_db_news = json_news.join(db_news, on='event', how='left', lsuffix='left', rsuffix='left') #if new news add to json file, it will append the database
+
+##pre-setting  for table
+gd = GridOptionsBuilder.from_dataframe(updated_db_news)
+gd.configure_pagination(enabled=True)
+gd.configure_default_column(editable=True, groupable=True)
+gridoptions = gd.build()
+
+##plot the table
+grid_table = AgGrid(
+    updated_db_news,
+    gridOptions=gridoptions,
+    update_mode=GridUpdateMode.VALUE_CHANGED,
+    theme="streamlit", 
+    fit_columns_on_grid_load=True,
+    allow_unsafe_jscode=True
+)
+
+##function to convert editted table into dataframe and upload to SQL
+def update(grid_table):
+    df_inputed_value = pd.DataFrame(grid_table["data"])
+    df_inputed_value.to_sql(con=db_conn, name='impacttable', if_exists="replace", index=False)
+
+##button to excute the upload
+st.button('Update', on_click=update, args=[grid_table])

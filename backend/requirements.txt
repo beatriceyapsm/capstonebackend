@@ -1,4 +1,4 @@
-﻿matplotlib
+matplotlib
 numpy
 openpyxl
 pandas
@@ -13,3 +13,5 @@ timeline
 requests
 altair
 streamlit-aggrid
+PyMySQL
+SQLAlchemy
